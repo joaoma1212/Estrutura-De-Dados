@@ -11,9 +11,11 @@ F) Idade media
 
 #include <stdio.h>
 
+#define TAM 50
+
 int main()
 {
-    int vidades [50] = {0};
+    int vidades [TAM] = {0};
     int i = 0;
     int opc = 0;
     int maior = 0;
@@ -35,14 +37,14 @@ int main()
         
         if (opc == 1) {
             
-            for (i = 0; i < 8; i++) {
+            for (i = 0; i < TAM; i++) {
                 printf("Informe as idade: ");
                 scanf("%i", &vidades[i]);
             }
             
         } else if (opc == 2) {
             
-            for (i = 0; i < 8; i++) {
+            for (i = 0; i < TAM; i++) {
                 
             //printf("%i\n", vidades[i]);
             printf("[%i] = %i\n", i, vidades[i]);
@@ -50,14 +52,14 @@ int main()
             
         } else if (opc == 3) {
             
-            for (i = 0; i < 8; i++) {
+            for (i = 0; i < TAM; i++) {
                 vidades[i] = 0;
             }
             
         } else if (opc == 4) {
             
            maior = vidades[i];
-            for (i = 0; i < 8; i++) {
+            for (i = 0; i < TAM; i++) {
              if(vidades[i] > maior) {
                  maior = vidades[i];
              }
@@ -68,7 +70,7 @@ int main()
         } else if (opc == 5) {
            
             contador = 0;
-           for (i = 0; i < 8; i++) {
+           for (i = 0; i < TAM; i++) {
                if (vidades[i] != 0) {
                    contador ++;
                }
@@ -80,7 +82,7 @@ int main()
             contador = 0;
             soma = 0;
             
-            for (i = 0; i < 8; i++) {
+            for (i = 0; i < TAM; i++) {
                 if (vidades[i] != 0) {
                     contador = contador ++;
                     soma = soma + vidades[i];
