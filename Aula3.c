@@ -116,3 +116,106 @@ int main() {
     menu();
     return 0;
 }
+
+/******************************************************************************
+EXEMPLO STRUCT
+*******************************************************************************/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#define TAM 5
+
+struct Aluno {
+    int ra;
+    float nota1;
+    float nota2;
+    float media;
+};
+
+struct Aluno vetorAluno[TAM];
+
+void inicializar(struct Aluno vetor[]) {
+    int i = 0;
+
+    for (i = 0; i < TAM; i++) {
+        vetor[i].ra = 0;
+        vetor[i].nota1 = 0;
+        vetor[i].nota2 = 0;
+        vetor[i].media = 0;
+    }
+}
+
+void carregar(struct Aluno vetor[]) {
+    int i = 0;
+
+    for (i = 0; i < TAM; i++) {
+        printf("\nDigite o RA, nota1 e nota2 do aluno %i:\n", i + 1);
+
+        scanf("%i", &vetor[i].ra);
+        scanf("%f", &vetor[i].nota1);
+        scanf("%f", &vetor[i].nota2);
+
+        vetor[i].media = (vetor[i].nota1 + vetor[i].nota2) / 2.0;
+    }
+}
+
+void exibir(struct Aluno vetor[]) {
+    int i = 0;
+
+    printf("\n===== LISTA DE ALUNOS =====\n");
+
+    for (i = 0; i < TAM; i++) {
+        printf("\nAluno %i\n", i + 1);
+        printf("RA: %i\n", vetor[i].ra);
+        printf("Nota 1: %.2f\n", vetor[i].nota1);
+        printf("Nota 2: %.2f\n", vetor[i].nota2);
+        printf("Media: %.2f\n", vetor[i].media);
+    }
+}
+
+void menu() {
+    int opc = 0;
+
+    do {
+        printf("\n===== ALUNOS =====\n");
+        printf("1. Inicializar\n");
+        printf("2. Carregar\n");
+        printf("3. Exibir\n");
+        printf("9. Sair\n");
+        printf("Escolha: ");
+        scanf("%i", &opc);
+
+        switch (opc) {
+            case 1:
+                inicializar(vetorAluno);
+                printf("Vetor inicializado!\n");
+                break;
+
+            case 2:
+                carregar(vetorAluno);
+                printf("Dados carregados!\n");
+                break;
+
+            case 3:
+                exibir(vetorAluno);
+                break;
+
+            case 9:
+                printf("Saindo...\n");
+                break;
+
+            default:
+                printf("Opcao invalida!\n");
+                break;
+        }
+
+    } while (opc != 9);
+}
+
+int main() {
+    inicializar(vetorAluno);
+    menu();
+    return 0;
+}
+
