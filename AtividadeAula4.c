@@ -35,6 +35,7 @@ d1) Outras opções podem ser adicionadas conforme o aluno/programador preferir,
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 #define TAM 10
 
@@ -42,11 +43,11 @@ struct Pastel {
     int numeroP;
     float tamanhoPa;
     int quantidade;
-    bool status;
     bool pagamento;
 };
 
-struct Pedidos vetorPedidos[TAM];
+struct Pastel pilha[TAM];
+int topo = -1;
 
 void Inicializar(struct Pastel vetor[]) {
     int i = 0;
@@ -54,102 +55,10 @@ void Inicializar(struct Pastel vetor[]) {
     for (i = 0; i < TAM; i++) {
         vetor[i].numeroP = 0;
         vetor[i].tamanhoPa = 0;
-        vetor[i].status = false;
         vetor[i].pagamento = false;
-}
-
-
-
-int topo = -1;
-
-void empilhar(int num, float tam, int qua, bool sta, bool pag, struct Pastel vetor[]) {
-    if (topo == TAM - 1) {
-        printf("Pididos cheios! Pedido nao foi adicionado!\n");
-    } else {
-        topo++;
-        vetor[topo].numeroP = num;
-        strcpy(vetor[topo].numeroP, num);
-        printf("Pedido armazenado com sucesso!\n");
     }
 }
 
-void desempilhar() {
-    if (topo == -1) {
-        printf("Nao a pedidos!\n");
-    } else if (pagamento != true) {
-        printf("pagamento nao concluido!")
-    } else if (status != true) {
-        printf("O pedido nao esta pronto!")
-    } else if (pagamento = true & status = true){
-        printf("Pedido concluido: %s\n", pilha[topo].num);
-        topo--;
-    }
-}
+void venda(int num, float tam, int qua, bool pag, struct Pastel vetor[]) {
 
-void imprimir(struct Pastel vetor[]) {
-    if (topo == -1) {
-        printf("Nao a pedidos!\n");
-    } else {
-        for (int i = topo; i >= 0; i--) {
-            printf("[%d] - Numero do Pedido: %i - Valor do : %s\n",
-                   i, vetor[i].num, vetor[i].tam);
-        }
-    }
-}
-
-void imprimirTopo(struct Livro vetor[]) {
-    if (topo == -1) {
-        printf("Pilha vazia!\n");
-    } else {
-        printf("Topo -> Codigo: %d - Nome: %s\n",
-               vetor[topo].codigo, vetor[topo].nome);
-    }
-}
-
-void menu() {
-    int opc = 0;
-    int c;
-    char n[50];
-
-    do {
-        printf("\n===== EMPILHAMENTO DE LIVROS =====\n");
-        printf("1 - Empilhar\n");
-        printf("2 - Desempilhar\n");
-        printf("3 - Imprimir pilha\n");
-        printf("4 - Imprimir topo\n");
-        printf("9 - Sair\n");
-        printf("Digite a opcao: ");
-        scanf("%d", &opc);
-
-        switch (opc) {
-            case 1:
-                
-                break;
-
-            case 2:
-                desempilhar();
-                break;
-
-            case 3:
-                imprimir(pilha);
-                break;
-
-            case 4:
-                imprimirTopo(pilha);
-                break;
-
-            case 9:
-                printf("Saindo...\n");
-                break;
-
-            default:
-                printf("Opcao invalida!\n");
-        }
-
-    } while (opc != 9);
-}
-
-int main() {
-    menu();
-    return 0;
 }
