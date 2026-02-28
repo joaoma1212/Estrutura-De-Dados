@@ -35,7 +35,6 @@ d1) Outras opções podem ser adicionadas conforme o aluno/programador preferir,
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
 
 #define TAM 10
 
@@ -43,22 +42,165 @@ struct Pastel {
     int numeroP;
     float tamanhoPa;
     int quantidade;
-    bool pagamento;
+    int ativo;
 };
 
-struct Pastel pilha[TAM];
-int topo = -1;
+struct Pastel pedidos[TAM];
 
-void Inicializar(struct Pastel vetor[]) {
-    int i = 0;
-    
-    for (i = 0; i < TAM; i++) {
-        vetor[i].numeroP = 0;
-        vetor[i].tamanhoPa = 0;
-        vetor[i].pagamento = false;
+void inicializar() {
+    for (int i = 0; i < TAM; i++) {
+        pedidos[i].ativo = 0;
     }
 }
 
-void venda(int num, float tam, int qua, bool pag, struct Pastel vetor[]) {
+void menu() {
+    printf("\n====== PASTELARIA ======\n");
+    printf("1 - Registrar Venda\n");
+    printf("2 - Imprimir Pedidos a Pagar\n");
+    printf("3 - Contar Pedidos Abertos\n");
+    printf("4 - Pagar Pedido\n");
+    printf("9 - Sair\n");
+    printf("Escolha: ");
+}
 
+int contarPedidos() {
+    int contador = 0;
+
+    for (int i = 0; i < TAM; i++) {
+        if (pedidos[i].ativo == 1) {
+            contador++;
+        }
+    }
+
+    return contador;
+}
+
+void venda() {
+
+    if (contarPedidos() == TAM) {
+        printf("Limite de 10 pedidos abertos atingido!\n");
+        return;
+    }
+
+    int numero, quantidade;
+    float tamanho;
+
+    printf("Numero do Pedido: ");
+    scanf("%d", &numero);
+
+    printf("Tamanho (3.50 = Pequeno | 4.50 = Medio | 5.50 = Grande): ");
+    scanf("%f", &tamanho);
+
+    printf("Quantidade: ");
+    scanf("%d", &quantidade);
+
+    for (int i = 0; i < TAM; i++) {
+        if (pedidos[i].ativo == 0) {
+
+            pedidos[i].numeroP = numero;
+            pedidos[i].tamanhoPa = tamanho;
+            pedidos[i].quantidade = quantidade;
+            pedidos[i].ativo = 1;
+
+            printf("Pedido registrado com sucesso!\n");
+            return;
+        }
+    }
+}
+
+void imprimir() {
+
+    if (contarPedidos() == 0) {
+        printf("Nao ha pedidos a pagar!\n");
+        return;
+    }
+
+    for (int i = 0; i < TAM; i++) {
+
+        if (pedidos[i].ativo == 1) {
+
+            float total = pedidos[i].tamanhoPa * pedidos[i].quantidade;
+            char tamanhoTexto[30];
+
+            if (pedidos[i].tamanhoPa == 3.50)
+                strcpy(tamanhoTexto, "Pequeno (R$ 3.50)");
+            else if (pedidos[i].tamanhoPa == 4.50)
+                strcpy(tamanhoTexto, "Medio (R$ 4.50)");
+            else if (pedidos[i].tamanhoPa == 5.50)
+                strcpy(tamanhoTexto, "Grande (R$ 5.50)");
+            else
+                strcpy(tamanhoTexto, "Tamanho invalido");
+
+            printf("\nPedido N %d\n", pedidos[i].numeroP);
+            printf("Quantidade: %d\n", pedidos[i].quantidade);
+            printf("Tamanho: %s\n", tamanhoTexto);
+            printf("Total: R$ %.2f\n", total);
+        }
+    }
+}
+
+void pagar() {
+
+    if (contarPedidos() == 0) {
+        printf("Nao ha pedidos para pagar!\n");
+        return;
+    }
+
+    int numero;
+    printf("Digite o numero do pedido a pagar: ");
+    scanf("%d", &numero);
+
+    for (int i = 0; i < TAM; i++) {
+
+        if (pedidos[i].ativo == 1 && pedidos[i].numeroP == numero) {
+
+            pedidos[i].ativo = 0;
+            printf("Pedido N %d pago com sucesso!\n", numero);
+            return;
+        }
+    }
+
+    printf("Pedido nao encontrado!\n");
+}
+
+int main() {
+
+    int opcao;
+
+    inicializar();
+
+    do {
+
+        menu();
+        scanf("%d", &opcao);
+
+        switch (opcao) {
+
+            case 1:
+                venda();
+                break;
+
+            case 2:
+                imprimir();
+                break;
+
+            case 3:
+                printf("Total de pedidos abertos: %d\n", contarPedidos());
+                break;
+
+            case 4:
+                pagar();
+                break;
+
+            case 9:
+                printf("Encerrando sistema...\n");
+                break;
+
+            default:
+                printf("Opcao invalida!\n");
+        }
+
+    } while (opcao != 9);
+
+    return 0;
 }
